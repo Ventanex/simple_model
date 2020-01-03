@@ -174,7 +174,7 @@ module SimpleModel
 
       unless Fixnum.instance_methods.include?(:to_d)
         def to_d
-          BigDecimal.new(self)
+          BigDecimal(self)
         end
       end
 
