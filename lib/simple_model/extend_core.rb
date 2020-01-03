@@ -40,11 +40,11 @@ module SimpleModel
         (((((self)*mulitplier).round).to_f)/mulitplier)
       end
 
-      
+
       def to_time
         Time.at(self)
       end
-      
+
       def to_date
         Time.at(self).to_date
       end
@@ -198,7 +198,7 @@ module SimpleModel
       end
       unless NilClass.instance_methods.include?(:to_d)
         def to_d
-          BigDecimal.new('')
+          BigDecimal('')
         end
       end
     end
