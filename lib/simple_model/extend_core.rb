@@ -198,7 +198,7 @@ module SimpleModel
       end
       unless NilClass.instance_methods.include?(:to_d)
         def to_d
-          BigDecimal(0)
+          BigDecimal("0")
         end
       end
     end
