@@ -3,7 +3,7 @@ module SimpleModel
   require 'active_support/time'
   require 'active_support/core_ext/class/attribute'
   require 'active_support/core_ext/class/attribute_accessors'
-  require 'active_support/core_ext/class/delegating_attributes'
+  require 'active_support/core_ext/class/subclasses'
   require 'active_support/core_ext/class/attribute'
   require 'active_support/core_ext/array/extract_options'
   require 'active_support/core_ext/hash/deep_merge'
