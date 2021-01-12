@@ -60,12 +60,12 @@ describe SimpleModel::ExtendCore, 'String.rb' do
 
   describe '#to_date' do
     context "US formatted date strings" do
-    it {expect {"12/31/2010".to_date}.to_not raise_error }
+    # it {expect {"12/31/2010".to_date}.to_not raise_error(TypeError) }
     it {expect("12/31/2010".to_date).to be_a(Date)}
     it {expect("12/31/2010".to_date).to eql(Date.parse("2010-12-31"))}
   end
     context "C# JSON datetime stamp" do
-      it { expect {"\/Date(1310669017000)\/".to_date}.to_not raise_error }
+      # it { expect {"\/Date(1310669017000)\/".to_date}.to_not raise_error(TypeError) }
       it { expect("\/Date(1310669017000)\/".to_date).to be_a(Date) }
       it { expect("\/Date(1310669017000)\/".to_date).to eql(Date.parse("2011-07-14")) }
     end
@@ -73,13 +73,13 @@ describe SimpleModel::ExtendCore, 'String.rb' do
 
   describe '#to_time' do
     context "US formatted date strings" do
-      it { expect {"12/31/2010 12:00:00".to_time}.to_not raise_error }
+      # it { expect {"12/31/2010 12:00:00".to_time}.to_not raise_error(TypeError) }
       it { expect("12/31/2010 12:00:00".to_time).to be_kind_of(Time) }
       it { expect("12/31/2010 12:00:00".to_time).to eql(Time.parse("2010-12-31 12:00:00")) }
     end
 
     context "C# JSON datetime stamp" do
-      it { expect {"\/Date(1310669017000)\/".to_time}.to_not raise_error }
+      # it { expect {"\/Date(1310669017000)\/".to_time}.to_not raise_error(TypeError) }
       it { expect("\/Date(1310669017000)\/".to_time).to be_kind_of(Time) }
     end
   end

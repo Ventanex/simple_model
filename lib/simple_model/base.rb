@@ -151,6 +151,7 @@ module SimpleModel
         if completed
           self.persisted = true
           @previously_changed = changes
+          @changed_attributes.try(:clear)
         else
           send(options[:rollback]) unless options[:rollback].blank?
         end

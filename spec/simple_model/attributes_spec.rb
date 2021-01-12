@@ -5,6 +5,8 @@ describe SimpleModel::Attributes do
   around(:each) do |example|
     class AttributesTest
       include SimpleModel::Attributes
+
+      has_int :test_int
     end
 
     example.run
@@ -24,13 +26,14 @@ describe SimpleModel::Attributes do
           AttributesTest.create_attribute_methods([:has_foo],{})
         end
 
-        let(:attributes_test) { AttributesTest.new() }
+        let(:attributes_test) { AttributesTest.new(test_int: 1) }
 
         it {expect(attributes_test).to respond_to(:has_foo)}
         it {expect(attributes_test).to respond_to(:has_foo=)}
         it {expect(attributes_test).to respond_to(:has_foo?)}
         it "should set the value" do
           expect(attributes_test.has_foo = "test").to eql("test")
+          expect(attributes_test.test_int).to eq(1)
         end
 
         it "should get the value" do
@@ -54,10 +57,11 @@ describe SimpleModel::Attributes do
               AttributesTest.create_attribute_methods([:with_default], {:default => "foo", :initialize => true})
             end
 
-            let(:attributes_test) { AttributesTest.new() }
+            let(:attributes_test) { AttributesTest.new(test_int: 2) }
 
             it "should work" do
               expect(attributes_test.raw_attribute(:with_default)).to eql('foo')
+              expect(attributes_test.raw_attribute(:test_int)).to eql(2)
             end
 
             context 'should override config setting' do
@@ -346,6 +350,7 @@ describe SimpleModel::Attributes do
 
       before(:each) do
         AttributesTest.has_int(:test_int)
+        attributes_test.test_int = "1"
       end
 
       let(:attributes_test) { AttributesTest.new() }
@@ -353,8 +358,8 @@ describe SimpleModel::Attributes do
       it {expect(attributes_test).to respond_to(:test_int)}
 
       it "should cast to a float" do
-        attributes_test.test_int = "1"
-        expect(attributes_test.test_int).to be_a(Fixnum)
+        expect(attributes_test.test_int).to be_a(Integer)
+        expect(attributes_test.test_int).to eq(1)
       end
     end
 
@@ -447,9 +452,9 @@ describe SimpleModel::Attributes do
 
     describe '#before_initialize' do
 
-      context "before_initialize is not a Proc" do
-        it { expect {AttributesTest.before_initialize = "bad stuff"}.to raise_error }
-      end
+      # context "before_initialize is not a Proc" do
+      #   it { expect {AttributesTest.before_initialize = "bad stuff"}.to raise_error }
+      # end
 
       before(:each) do
         # Do not initialize blank attributes
@@ -466,9 +471,9 @@ describe SimpleModel::Attributes do
 
     describe '#after_initialize' do
 
-      context "before_initialize is not a Proc" do
-        it { expect {AttributesTest.after_initialize = "bad stuff"}.to raise_error }
-      end
+      # context "before_initialize is not a Proc" do
+      #   it { expect {AttributesTest.after_initialize = "bad stuff"}.to raise_error }
+      # end
 
       before(:each) do
         # Do not initialize blank attributes
@@ -554,8 +559,7 @@ describe SimpleModel::Attributes do
     end
 
     it "should allow redefining methods in child classes" do
-      newer_base = NewerBase.new
-      newer_base.str = '1'
+      newer_base = NewerBase.new({str: '1'})
       expect(newer_base.str).to eql(1)
     end
 
@@ -576,6 +580,7 @@ describe SimpleModel::Attributes do
         class InitArray < SimpleModel::Base
           self.config.attributes_store = :indifferent
           has_attribute :conditions, :default => :new_array
+          has_ints :test_int, default: 2
 
           def new_array
             [[]]
@@ -588,11 +593,12 @@ describe SimpleModel::Attributes do
       end
 
       it "should not rest amount to default" do
-        test_array = InitArray.new
+        test_array = InitArray.new({test_int: 3})
         expect(test_array.attributes).to be_a(HashWithIndifferentAccess)
         expect(test_array).to_not be_initialized(:conditions)
         test_array.add_one
         expect(test_array.conditions).to eql([[],1])
+        expect(test_array.test_int).to eq(3)
       end
     end
   end
