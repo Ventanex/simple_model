@@ -29,7 +29,7 @@ module SimpleModel
     end
 
     def attributes
-      @attributes ||= new_attribute_store
+      @simple_attributes ||= new_attribute_store
     end
 
     def attributes=attrs
@@ -40,7 +40,7 @@ module SimpleModel
           attrs.stringify_keys!
         end
       end
-      @attributes = attrs
+      @simple_attributes = attrs
     end
 
     # Returns true if attribute has been initialized
@@ -136,7 +136,7 @@ module SimpleModel
     alias :delete_attribute :delete_attributes
 
     def reset_attributes
-      @attributes = new_attribute_store
+      @simple_attributes = new_attribute_store
     end
 
     private

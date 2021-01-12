@@ -163,27 +163,27 @@ module SimpleModel
       end
     end
 
-    Fixnum.class_eval do
+    Integer.class_eval do
       include ToCurrencyS
 
-      unless Fixnum.instance_methods.include?(:to_b)
+      unless Integer.instance_methods.include?(:to_b)
         def to_b
           !zero?
         end
       end
 
-      unless Fixnum.instance_methods.include?(:to_d)
+      unless Integer.instance_methods.include?(:to_d)
         def to_d
           BigDecimal(self)
         end
       end
 
-      unless Fixnum.instance_methods.include?(:to_date)
+      unless Integer.instance_methods.include?(:to_date)
         def to_date
           Time.at(self).to_date
         end
       end
-      unless Fixnum.instance_methods.include?(:to_time)
+      unless Integer.instance_methods.include?(:to_time)
         def to_time
           Time.at(self)
         end
